@@ -10,7 +10,7 @@
 
 
 ;; LINE NUMBER MODE
-;;(linum-relative-global-mode 1)
+(linum-relative-global-mode 1)
 
 
 ;; DISABLE BARS
@@ -53,7 +53,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#0d1011" "#928374"))
  '(objed-cursor-color "#fb4934")
  '(package-selected-packages
-	'(company company-c-headers doom-modeline doom-themes linum-relative lsp-mode move-text multiple-cursors turkish yasnippet yasnippet-snippets))
+	'(darkroom olivetti emmet-mode go lsp-ui go-mode seethru company company-c-headers doom-modeline doom-themes linum-relative lsp-mode move-text multiple-cursors turkish yasnippet yasnippet-snippets))
  '(pdf-view-midnight-colors (cons "#ebdbb2" "#282828"))
  '(rustic-ansi-faces
 	["#282828" "#fb4934" "#b8bb26" "#fabd2f" "#83a598" "#cc241d" "#8ec07c" "#ebdbb2"])
@@ -91,30 +91,45 @@
 ;;(package-install-selected-packages )
 
 ;; MULTIPLE CURSORS
-;;(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-;;
-;;;; MOVE LINE
-;;(global-set-key (kbd "M-p") 'move-text-line-up)
-;;(global-set-key (kbd "M-n") 'move-text-line-down)
-;;
-;;;; COMPANY
-;;(add-hook 'after-init-hook 'global-company-mode)
-;;
-;;;; YASNIPPET
-;;(require 'yasnippet)
-;;(yas-global-mode 1)
-;;
-;;;; CCPP
-;;(require 'cc-mode)
-;;(require 'company)
-;;(setq company-clang-executable "/usr/bin/clang")
-;;
-;;;;TURKISH
-;;(require 'turkish)
-;;
-;;;; COVER TO TURKISH LAYOUT
-;;(global-set-key (kbd "C-}") 'turkish-correct-region)
-;;
-;;(require 'doom-modeline)
-;;(doom-modeline-mode 1)
-;;(set-frame-font "Hack Nerd Font Mono 12" nil t)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+
+;; MOVE LINE
+(global-set-key (kbd "M-p") 'move-text-line-up)
+(global-set-key (kbd "M-n") 'move-text-line-down)
+
+;; COMPANY
+(add-hook 'after-init-hook 'global-company-mode)
+
+;; YASNIPPET
+(require 'yasnippet)
+(yas-global-mode 1)
+
+;; CCPP
+(require 'cc-mode)
+(require 'company)
+(setq company-clang-executable "/usr/bin/clang")
+
+;;TURKISH
+(require 'turkish)
+
+;; COVER TO TURKISH LAYOUT
+(global-set-key (kbd "C-}") 'turkish-correct-region)
+
+(require 'doom-modeline)
+(doom-modeline-mode 1)
+;; (set-frame-font "Hack Nerd Font Mono 12" nil t)
+;; (setenv "PATH" (concat "/home/bur4k/go/bin:"
+;;     	    (getenv "PATH")))
+
+
+;; Company mode
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 1)
+
+;; Go - lsp-mode
+;; Set up before-save hooks to format buffer and add/delete imports.
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
